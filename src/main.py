@@ -17,7 +17,7 @@ def main():
 
     spark = spark_builder.get_spark("Product Dimension SCD")
     # 1) Read
-    df = etl.read_daily_data(spark, "gs://spark-datasets-gds-123/products", proc_date)
+    df = etl.read_daily_data(spark, "gs://spark-dataserts-gds-123/products", proc_date)
     # 2) Quality
     deequ_checks.run_quality_checks(spark, df)
     # 3) Sculpt SCD2
@@ -27,7 +27,7 @@ def main():
     # 5) Merge
     writer.merge_scd2_bq(spark, "triple-bird-457617-k1", "product_dwh", "dim_products_staging", "dim_products")
     # 6) Archive
-    writer.archive_processed_csv("spark-datasets-gds-123", proc_date)
+    writer.archive_processed_csv("spark-dataserts-gds-123", proc_date)
 
     spark.stop()
     sys.exit(0)
